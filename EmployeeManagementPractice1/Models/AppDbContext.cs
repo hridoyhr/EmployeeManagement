@@ -15,5 +15,18 @@ namespace EmployeeManagementPractice1.Models
         }
 
         public DbSet<Employee> Employees { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Employee>().HasData(
+                    new Employee
+                    { 
+                        Id = 4,
+                        Name = "Mark",
+                        Department = Dept.QA,
+                        Email = "mark@gamil.com"
+                    }
+                );
+        }
     }
 }
