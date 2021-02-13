@@ -19,7 +19,7 @@ namespace EmployeeManagementPractice1.ViewModels
         [Display(Name = "Office Email")]
         public string Email { get; set; }
         [Required]
-        public Dept Department { get; set; }
-        public IFormFile Photo { get; set; }
+        public Dept? Department { get; set; }
+        public List<IFormFile> Photos { get; set; }
     }
 }
