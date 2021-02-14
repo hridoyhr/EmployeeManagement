@@ -6,7 +6,7 @@
     var photoPath = "~/images/" + (Model.ExistingPhotoPath ?? "man.png");
 }
 
-<form enctype="multipart/form-data" asp-controller="Home" asp-action="edit" 
+<form enctype="multipart/form-data" asp-controller="Home" asp-action="edit"
       method="post" class="mt-3">
 
     <input hidden asp-for="Id" />
@@ -40,16 +40,16 @@
     </div>
 
     <div class="form-group row">
-        <label asp-for="Photos" class="col-sm-2 col-form-label"></label>
+        <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <div class="custom-file">
-                <input multiple asp-for="Photos" class="form-control custom-file-input" />
+                <input multiple asp-for="Photo" class="form-control custom-file-input" />
                 <label class="custom-file-label">Click here to change photo</label>
             </div>
         </div>
     </div>
 
-    <div class="form-group row col-sm-4 offset-4" >
+    <div class="form-group row col-sm-4 offset-4">
         <img src="@photoPath" class="img-thumbnail" asp-append-version="true" />
     </div>
 
@@ -63,18 +63,29 @@
         </div>
     </div>
 
+    @*@section Scripts {
+            <script>
+                $(document).ready(function () {
+                    $('.custom-file-input').on("change", function () {
+                        var fileLabel = $(this).next('.custom-file-label');
+                        var files = $(this)[0].files;
+                        if (files.length > 1) {
+                            fileLabel.html(files.length + ' files selected');
+                        }
+                        else if (files.length == 1) {
+                            fileLabel.html(files[0].name);
+                        }
+                    });
+                });
+            </script>
+        }*@
+
     @section Scripts {
         <script>
             $(document).ready(function () {
                 $('.custom-file-input').on("change", function () {
-                    var fileLabel = $(this).next('.custom-file-label');
-                    var files = $(this)[0].files;
-                    if (files.length > 1) {
-                        fileLabel.html(files.length + ' files selected');
-                    }
-                    else if (files.length == 1) {
-                        fileLabel.html(files[0].name);
-                    }
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(fileName);
                 });
             });
         </script>
