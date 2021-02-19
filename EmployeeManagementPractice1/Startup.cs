@@ -43,7 +43,7 @@ namespace EmployeeManagementPractice1
             }
             else
             {
-                app.UseStatusCodePagesWithRedirects("/error/{0}");
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
             }
 
             app.UseStaticFiles();
