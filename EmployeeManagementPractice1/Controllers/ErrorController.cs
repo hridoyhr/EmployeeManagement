@@ -17,6 +17,7 @@ namespace EmployeeManagementPractice1.Controllers
                     ViewBag.ErrorMessage = "Sorry, the resource you requested could not be found";
                     break;
             }
+            
             return View("NotFound");
         }
     }
