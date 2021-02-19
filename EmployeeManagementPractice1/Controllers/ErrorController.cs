@@ -8,6 +8,7 @@ namespace EmployeeManagementPractice1.Controllers
 {
     public class ErrorController : Controller
     {
+        //If there is 404 status, the route path will become Error/404
         [Route("Ërror/{statusCode}")]
         public IActionResult HttpStatusCodeHandler(int statusCode)
         {
