@@ -11,13 +11,14 @@ namespace EmployeeManagementPractice1.Controllers
 {
     public class ErrorController : Controller
     {
+        //Logging Exception
         private readonly ILogger<ErrorController> logger;
 
-        //Logging Exception
         public ErrorController(ILogger<ErrorController> logger)
         {
             this.logger = logger;
         }
+        //Rest of the code
 
         //If there is 404 status, the route path will become Error/404
         [Route("Ërror/{statusCode}")]
