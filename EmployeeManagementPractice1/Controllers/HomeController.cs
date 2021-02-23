@@ -33,6 +33,7 @@ namespace EmployeeManagementPractice1.Controllers
         
         public ViewResult Details(int? id)
         {
+            //Global Exception Handiling
             throw new Exception("Error in Details View");
 
             Employee employee = _employeeRepository.GetEmployee(id.Value);
@@ -50,6 +51,7 @@ namespace EmployeeManagementPractice1.Controllers
             };
             return View(homeDetailsViewModel);
         }
+        
 
         //Create Employee
         [HttpGet]
