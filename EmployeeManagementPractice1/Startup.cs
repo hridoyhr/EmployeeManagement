@@ -2,6 +2,7 @@ using EmployeeManagementPractice1.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,10 @@ namespace EmployeeManagementPractice1
 
             services.AddDbContextPool<AppDbContext>(
                 options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<AppDbContext>();
+
             services.AddMvc().AddXmlDataContractSerializerFormatters();
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
         }
@@ -48,6 +53,7 @@ namespace EmployeeManagementPractice1
             }
 
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseRouting();
             app.UseCors();
 
