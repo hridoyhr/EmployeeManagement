@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,15 @@ namespace EmployeeManagementPractice1.Controllers
 {
     public class ErrorController : Controller
     {
+        //Logging Exception
+        private readonly ILogger<ErrorController> logger;
+
+        public ErrorController(ILogger<ErrorController> logger)
+        {
+            this.logger = logger;
+        }
+        //Rest of the code
+
         //If there is 404 status, the route path will become Error/404
         [Route("Ërror/{statusCode}")]
         public IActionResult HttpStatusCodeHandler(int statusCode)
@@ -19,12 +30,26 @@ namespace EmployeeManagementPractice1.Controllers
             {
                 case 404:
                     ViewBag.ErrorMessage = "Sorry, the resource you requested could not be found";
-                    ViewBag.Path = statusCodeResult.OriginalPath;
-                    ViewBag.QS = statusCodeResult.OriginalQueryString;
+
+                    logger.LogWarning($"404 Error Occured. Path = {statusCodeResult.OriginalPath}" +
+                        $" and OueryString = {statusCodeResult.OriginalQueryString}");
                     break;
             }
             
             return View("NotFound");
+        }
+
+        //Global Exception Handiling
+        [Route("Error")]
+        [AllowAnonymous]
+        public IActionResult Error()
+        {
+            var exceptionDetails = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+
+            logger.LogError($"The path {exceptionDetails.Path} threw an exception" +
+                $" {exceptionDetails.Error}");
+
+            return View("Error");
         }
     }
 }

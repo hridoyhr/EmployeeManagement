@@ -2,6 +2,7 @@
 using EmployeeManagementPractice1.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 
@@ -13,13 +14,18 @@ namespace EmployeeManagementPractice1.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         [Obsolete]
         private readonly IHostingEnvironment hostingEnvironment;
+        private readonly ILogger logger;
 
         [Obsolete]
         public HomeController(IEmployeeRepository employeeRepository,
-                              IHostingEnvironment hostingEnvironment)
+                              IHostingEnvironment hostingEnvironment,
+                              ILogger<HomeController> logger)
         {
+            //Log Level Configuration    
+
             _employeeRepository = employeeRepository;
             this.hostingEnvironment = hostingEnvironment;
+            this.logger = logger;
         }
 
 
@@ -30,9 +36,21 @@ namespace EmployeeManagementPractice1.Controllers
             return View(model);
         }
 
-        
+        //Details Employee
         public ViewResult Details(int? id)
         {
+            //Global Exception Handiling
+            //throw new Exception("Error in Details View");
+
+            //LogLevel Configuration
+
+            logger.LogTrace("Trace Log");
+            logger.LogDebug("Debug Log");
+            logger.LogInformation("Information Log");
+            logger.LogWarning("Warning Log");
+            logger.LogError("Error Log");
+            logger.LogCritical("Critical Log");
+
             Employee employee = _employeeRepository.GetEmployee(id.Value);
 
             if (employee == null)
@@ -48,6 +66,7 @@ namespace EmployeeManagementPractice1.Controllers
             };
             return View(homeDetailsViewModel);
         }
+        
 
         //Create Employee
         [HttpGet]
@@ -56,6 +75,7 @@ namespace EmployeeManagementPractice1.Controllers
             return View();
         }
 
+        //Create View Model
         [HttpPost]
         [Obsolete]
         public IActionResult Create(EmployeeCreateViewModel model)
@@ -94,6 +114,8 @@ namespace EmployeeManagementPractice1.Controllers
             return View(employeeEditViewModel);
         }
 
+
+        //Edit View Model
         [HttpPost]
         [Obsolete]
         public IActionResult Edit(EmployeeEditViewModel model)
@@ -124,6 +146,7 @@ namespace EmployeeManagementPractice1.Controllers
             return View();
         }
 
+        //Upload File
         [Obsolete]
         private string ProcessUploadedFile(EmployeeCreateViewModel model)
         {
