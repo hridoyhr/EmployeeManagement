@@ -21,6 +21,14 @@ namespace EmployeeManagementPractice1.Controllers
             this.signInManager = signInManager;
         }
 
+        //Logout action
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("index", "home");
+        }
+
         [HttpGet]
         public IActionResult Register()
         {
