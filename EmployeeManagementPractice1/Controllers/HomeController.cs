@@ -1,5 +1,6 @@
 ﻿using EmployeeManagementPractice1.Models;
 using EmployeeManagementPractice1.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -8,7 +9,7 @@ using System.IO;
 
 namespace EmployeeManagementPractice1.Controllers
 {
-
+    
     public class HomeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -29,7 +30,7 @@ namespace EmployeeManagementPractice1.Controllers
         }
 
 
-        
+        [AllowAnonymous]
         public ViewResult Index()
         {
             var model = _employeeRepository.GetAllEmployees();
@@ -37,6 +38,7 @@ namespace EmployeeManagementPractice1.Controllers
         }
 
         //Details Employee
+        [AllowAnonymous]
         public ViewResult Details(int? id)
         {
             //Global Exception Handiling

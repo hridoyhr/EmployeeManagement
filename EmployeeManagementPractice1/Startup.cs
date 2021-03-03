@@ -1,8 +1,10 @@
 using EmployeeManagementPractice1.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,8 +45,15 @@ namespace EmployeeManagementPractice1
                 options.Password.RequiredUniqueChars = 3;
             }); */
 
-            services.AddMvc().AddXmlDataContractSerializerFormatters();
+            //Apply Authorize Attribute Globally
+            services.AddMvc(config => {
+                var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            }).AddXmlDataContractSerializerFormatters();
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
+            //End Authorize Attribute
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

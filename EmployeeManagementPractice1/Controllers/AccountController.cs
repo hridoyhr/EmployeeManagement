@@ -1,4 +1,5 @@
 ﻿using EmployeeManagementPractice1.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,12 +32,14 @@ namespace EmployeeManagementPractice1.Controllers
 
         //Register
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -61,12 +64,14 @@ namespace EmployeeManagementPractice1.Controllers
 
         //Login
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         { 
             if(ModelState.IsValid)
